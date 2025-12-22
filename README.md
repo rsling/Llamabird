@@ -5,6 +5,8 @@
 # Llamabird
 
 AI-powered email summarizer for Thunderbird/Betterbird using local Ollama models.
+Incoming emails are summarized and summaries added as QNote notes.
+In Betterbird or Thunderbird, configure QNote to pop up or show the summary inline.
 
 <p align="center">
   <img src="llamabird-screenshot.png" width="400" alt="Llamabird Logo" />
