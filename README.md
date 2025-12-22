@@ -1,4 +1,6 @@
-<img align="left" src="icon.png" alt="Llamabird Logo" width="200"/>
+<p align="center">
+  <img src="icon.png" width="200" alt="Llamabird Logo" />
+</p>
 
 # Llamabird
 
