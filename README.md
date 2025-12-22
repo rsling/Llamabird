@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="icon.png" width="200" alt="Llamabird Logo" />
+  <img src="icon.png" width="400" alt="Llamabird Logo" />
 </p>
 
 # Llamabird
