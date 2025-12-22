@@ -1,0 +1,64 @@
+{
+  "profile_path": "/path/to/.thunderbird/profile.default",
+  "qnote_path": "/path/to/.thunderbird/profile.default/QNote",
+  "mail_path": "/path/to/.thunderbird/profile.default/Mail",
+  "mail_format": "mbox",
+  "mail_accounts": [
+    {
+      "name": "Local Folders",
+      "path": "/path/to/.thunderbird/profile.default/Mail/Local Folders",
+      "format": "mbox"
+    },
+    {
+      "name": "smart mailboxes",
+      "path": "/path/to/.thunderbird/profile.default/Mail/smart mailboxes",
+      "format": "mbox"
+    }
+  ],
+  "imap_mail_path": "/path/to/.thunderbird/profile.default/ImapMail",
+  "imap_accounts": [
+    {
+      "name": "imap.example.com",
+      "path": "/path/to/.thunderbird/profile.default/ImapMail/imap.example.com",
+      "inbox_path": "/path/to/.thunderbird/profile.default/ImapMail/imap.example.com/INBOX",
+      "enabled": true
+    },
+    {
+      "name": "mail.example.org",
+      "path": "/path/to/.thunderbird/profile.default/ImapMail/mail.example.org",
+      "inbox_path": "/path/to/.thunderbird/profile.default/ImapMail/mail.example.org/INBOX",
+      "enabled": true
+    }
+  ],
+  "attachment_extraction": {
+    "enabled": true,
+    "max_size_mb": 10,
+    "libraries": {
+      "html2text": "html2text",
+      "chardet": "chardet",
+      "pdf": "pypdf",
+      "docx": "python-docx",
+      "odt": "odfpy"
+    },
+    "missing": []
+  },
+  "ollama_model": "qwen2.5:7b",
+  "ollama_url": "http://localhost:11434",
+  "summarizer_prompts": {
+    "template": null,
+    "max_body_length": 10000,
+    "max_attachment_length": 2000,
+    "model_options": {},
+    "instructions": {
+      "include_quoted_text": false,
+      "include_recipients": true,
+      "include_attachments": true,
+      "use_real_names": true
+    }
+  },
+  "sender_filtering": {
+    "whitelist": [],
+    "blacklist": []
+  },
+  "summary_language": "German"
+}
