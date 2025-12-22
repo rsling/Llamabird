@@ -6,6 +6,10 @@
 
 AI-powered email summarizer for Thunderbird/Betterbird using local Ollama models.
 
+<p align="center">
+  <img src="llamabird-screenshot.png" width="400" alt="Llamabird Logo" />
+</p>
+
 ## Quick Start
 
 ### 1. Environment Discovery
