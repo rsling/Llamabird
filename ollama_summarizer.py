@@ -45,7 +45,7 @@ class OllamaSummarizer:
 
 Focus on:
 - The main message body (exclude quoted reply text unless specifically important)
-- Key information from any attachments
+- Key information from ALL attachments (if multiple attachments, summarize each one)
 - Who sent the email to whom (use real names from the email, not email addresses)
 
 Email details:
@@ -59,7 +59,7 @@ Email body:
 
 {attachments_section}
 
-Provide a clear, concise summary in 2-4 sentences. IMPORTANT: Write your summary in {language}, regardless of the email's language."""
+Provide a clear, concise summary in 2-4 sentences. IMPORTANT: If there are multiple attachments, mention all of them in your summary. Write your summary in {language}, regardless of the email's language."""
 
     def __init__(self, config_path: Optional[Path] = None):
         """
