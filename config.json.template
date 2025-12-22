@@ -60,5 +60,14 @@
     "whitelist": [],
     "blacklist": []
   },
-  "summary_language": "German"
+  "summary_language": "German",
+  "daemon": {
+    "mode": "auto",
+    "debounce_seconds": 30,
+    "interval_minutes": 5,
+    "preload_model": true,
+    "max_emails_per_run": 50,
+    "log_file": "llamabird_daemon.log",
+    "log_level": "INFO"
+  }
 }

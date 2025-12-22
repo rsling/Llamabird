@@ -1,0 +1,19 @@
+[Unit]
+Description=Llamabird Email Summarization Daemon
+Documentation=https://github.com/rsling/Llamabird
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=LLAMABIRD_PATH
+ExecStart=VENV_PYTHON llamabird_daemon.py
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Environment
+Environment="PYTHONUNBUFFERED=1"
+
+[Install]
+WantedBy=default.target

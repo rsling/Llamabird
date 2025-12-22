@@ -176,7 +176,111 @@ python3 llamabird.py --limit 50 --preload --profile --account your-server
 - Press 'q' to quit the pager, space for next page
 - Useful for reviewing summaries before committing to QNote files
 
-### 8. Configure Summary Language
+### 8. Set Up Automatic Summarization (Daemon)
+
+Run Llamabird as a background service that automatically summarizes new emails as they arrive.
+
+#### Installation
+
+Run the installation script to set up the daemon:
+
+```bash
+cd llamabird
+./install_daemon.sh
+```
+
+This will:
+- Install the `watchdog` dependency for file monitoring
+- Update your configuration with daemon settings
+- Create a systemd user service
+- Enable automatic startup at login
+
+#### Daemon Usage
+
+**Start the daemon:**
+```bash
+systemctl --user start llamabird
+```
+
+**Check daemon status:**
+```bash
+systemctl --user status llamabird
+```
+
+**View live logs:**
+```bash
+journalctl --user -u llamabird -f
+```
+
+**Stop the daemon:**
+```bash
+systemctl --user stop llamabird
+```
+
+**Disable autostart:**
+```bash
+systemctl --user disable llamabird
+```
+
+#### How It Works
+
+**Auto Mode (Default):**
+1. Monitors all enabled INBOX files for modifications
+2. When an email arrives, starts a 30-second debounce timer
+3. If more emails arrive within 30s, the timer resets
+4. When the timer expires, processes all new emails in batch
+5. AI model stays loaded in memory for fast processing (~2-3s per email)
+
+**Behavior:**
+- New emails get summaries within ~30 seconds of arrival
+- Multiple emails arriving together are batched efficiently
+- Only processes emails that don't already have QNotes
+- Respects sender whitelist/blacklist and deleted email filtering
+- Automatically restarts if it crashes (systemd)
+- Starts automatically at login
+
+#### Configuration
+
+The daemon settings are in `config.json`:
+
+```json
+{
+  "daemon": {
+    "mode": "auto",
+    "debounce_seconds": 30,
+    "interval_minutes": 5,
+    "preload_model": true,
+    "max_emails_per_run": 50,
+    "log_file": "llamabird_daemon.log",
+    "log_level": "INFO"
+  }
+}
+```
+
+**Settings:**
+- `mode`: "auto" (file watching) or "interval" (periodic)
+- `debounce_seconds`: Wait time after last email before processing (auto mode)
+- `interval_minutes`: Process every N minutes (interval mode)
+- `preload_model`: Load AI model on startup for better performance
+- `max_emails_per_run`: Safety limit per processing cycle
+- `log_file`: Log file location
+- `log_level`: DEBUG, INFO, WARNING, or ERROR
+
+**Interval Mode:**
+To use periodic processing instead of file watching, change mode to "interval":
+
+```json
+{
+  "daemon": {
+    "mode": "interval",
+    "interval_minutes": 5
+  }
+}
+```
+
+Then restart the daemon: `systemctl --user restart llamabird`
+
+### 9. Configure Summary Language
 
 Llamabird can generate summaries in any language, regardless of the email's language. The default is German.
 
@@ -201,7 +305,7 @@ Edit `config.json` to change the summary language:
 ```
 This will generate all summaries in English, even for German emails.
 
-### 9. Customize Summarization Prompts (Optional)
+### 10. Customize Summarization Prompts (Optional)
 
 The summarizer uses a default prompt that:
 - Summarizes the main email body (excludes quoted reply text)
@@ -233,7 +337,7 @@ To customize the prompt, edit `config.json`:
 
 Set `"template": null` to use the default prompt.
 
-### 10. Configure Sender Filtering (Optional)
+### 11. Configure Sender Filtering (Optional)
 
 Llamabird automatically skips emails marked as deleted in Thunderbird. You can also filter emails by sender address using whitelist and blacklist patterns.
 
@@ -288,7 +392,7 @@ This configuration will:
 - Skip all other @uber.com addresses
 - Process all other emails normally
 
-### 11. Configure Account Filtering (Optional)
+### 12. Configure Account Filtering (Optional)
 
 To exclude specific email accounts from summarization, edit `config.json`:
 
@@ -307,7 +411,7 @@ To exclude specific email accounts from summarization, edit `config.json`:
 
 ## Project Status
 
-**Current Step:** Step 5 - Integration (Manual Mode) ✓
+**Current Step:** Step 6 - File Monitor & Automation ✓
 
 ### Development Roadmap
 
@@ -316,7 +420,7 @@ To exclude specific email accounts from summarization, edit `config.json`:
 - [x] Step 3: Email Parser Module
 - [x] Step 4: Ollama Summarizer Module
 - [x] Step 5: Integration - Manual Mode
-- [ ] Step 6: File Monitor & Automation
+- [x] Step 6: File Monitor & Automation
 - [ ] Step 7: Production Hardening
 
 ## Requirements
@@ -374,5 +478,14 @@ After running `discover.py`, a `config.json` file will be created with:
   - Natural language name (e.g., "German", "English", "Spanish")
   - Default: "German"
   - Summaries will be written in this language regardless of the email's language
+
+- **daemon**: Automatic summarization daemon settings
+  - `mode`: "auto" (file watching) or "interval" (periodic) - Default: "auto"
+  - `debounce_seconds`: Wait time after last email before processing - Default: 30
+  - `interval_minutes`: Minutes between checks in interval mode - Default: 5
+  - `preload_model`: Preload AI model on startup - Default: true
+  - `max_emails_per_run`: Maximum emails to process per cycle - Default: 50
+  - `log_file`: Daemon log file location - Default: "llamabird_daemon.log"
+  - `log_level`: Logging verbosity (DEBUG, INFO, WARNING, ERROR) - Default: "INFO"
 
 This configuration will be used by subsequent Llamabird components.

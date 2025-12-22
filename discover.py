@@ -528,6 +528,18 @@ def main():
         if 'summary_language' not in config:
             config['summary_language'] = "German"  # Default to German
 
+        # Add daemon configuration if not present
+        if 'daemon' not in config:
+            config['daemon'] = {
+                "mode": "auto",  # "auto" (file watcher) or "interval" (periodic)
+                "debounce_seconds": 30,  # Wait after last email before processing
+                "interval_minutes": 5,  # For interval mode: check every N minutes
+                "preload_model": True,  # Preload Ollama model on startup
+                "max_emails_per_run": 50,  # Safety limit
+                "log_file": "llamabird_daemon.log",
+                "log_level": "INFO"  # DEBUG, INFO, WARNING, ERROR
+            }
+
         print(f"\n{Colors.BOLD}Configuration for Llamabird:{Colors.END}\n")
         print(json.dumps(config, indent=2))
 

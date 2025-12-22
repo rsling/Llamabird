@@ -9,8 +9,8 @@ pypdf>=4.0.0  # PDF text extraction
 python-docx>=1.1.0  # Modern Word (.docx) document extraction
 odfpy>=1.4.1  # LibreOffice/OpenOffice (.odt) document extraction
 
+# File monitoring for daemon (Step 6)
+watchdog>=3.0.0  # File system event monitoring
+
 # Note: Legacy .doc file support is not included as textract is deprecated.
 #       Only modern .docx files are supported via python-docx.
-
-# Future dependencies (will be added in later steps):
-# watchdog>=3.0.0  # For file system monitoring (Step 6)
