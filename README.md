@@ -2,6 +2,10 @@
   <img src="icon.png" width="400" alt="Llamabird Logo" />
 </p>
 
+# Status
+
+Made obsolete by further development of ThunderAI and Claude Desktop.
+
 # Llamabird
 
 AI-powered email summarizer for Thunderbird/Betterbird using local Ollama models.
